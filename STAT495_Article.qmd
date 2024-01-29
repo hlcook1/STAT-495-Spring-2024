@@ -25,14 +25,26 @@ You can add options to executable code like this
 
 The `echo: false` option disables the printing of code (only output is displayed).
 
-**Abstract**
+## **Abstract**
 
-**Introduction**
+## **Introduction**
 
-**Data**
+explain the problem
 
-**Methods**
+explain the previous literature
 
-**Results**
+explain the following sections breifly
 
-**Discussion**
+## **Data**
+
+explain steps to create overall dataset (fire department data with weather data)
+
+explain steps to create the time series data
+
+explain steps to create classification data
+
+## **Methods**
+
+## **Results**
+
+## **Discussion**
