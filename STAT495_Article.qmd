@@ -27,6 +27,8 @@ The `echo: false` option disables the printing of code (only output is displayed
 
 ## **Abstract**
 
+state problem, general conclusions/findings
+
 ## **Introduction**
 
 explain the problem
@@ -37,14 +39,40 @@ explain the following sections breifly
 
 ## **Data**
 
+### First Steps
+
 explain steps to create overall dataset (fire department data with weather data)
 
+### Time Series
+
 explain steps to create the time series data
+
+### Classification
 
 explain steps to create classification data
 
 ## **Methods**
 
+### Time Series
+
+explain time series methods
+
+### Classification
+
+explain classification methods
+
 ## **Results**
 
+### Time Series
+
+explain time series results
+
+### Classification
+
+explain classification results
+
 ## **Discussion**
+
+discussion of results/findings
+
+discussion of limitations, future work
