@@ -1,6 +1,9 @@
 ---
 title: "STAT495_Article"
-format: html
+format: 
+  pdf:
+    documentclass: scrartcl
+    papersize: letter
 editor: visual
 ---
 
