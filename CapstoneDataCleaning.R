@@ -4,12 +4,13 @@ juldec <- WeatherSecondHalf
 
 
 ##########Combine and clean weather data and fix daylight savings###############
+
 #Combines the weather dfs together 
 df <- rbind.data.frame(janjune,juldec)
 df
 
 #Removes the fake date from the time column
-df$Time <- as.POSIXlt(df$Time, format = "%Y-%m-%d %H:%M:%S")
+df$Time <- as.POSIXct(df$Time, format = "%Y-%m-%d %H:%M:%S")
 df$Time <- format(df$Time, format = "%H:%M:%S")
 print(df)
 
@@ -35,7 +36,7 @@ df <- df[, !names(df) %in% c("DateTime")]
 weather <- df
 
 ####### Removes fake date from time column
-firedf$Time <- as.POSIXlt(firedf$Time, format = "%Y-%m-%d %H:%M:%S")
+firedf$Time <- as.POSIXct(firedf$Time, format = "%Y-%m-%d %H:%M:%S")
 firedf$Time <- format(firedf$Time, format = "%H:%M:%S")
 firedf
 ##### Removed UTC stamp from date cells
@@ -44,39 +45,35 @@ firedf
 
 ################################################################################
 ######## Attach needed rows to the proper FireData rows ########################
-
-
+################################################################################
 ## converts the date as a string to actual time object in a new vector
-fire_t <- as.POSIXct(firedf$Time, format = "%H:%M:%S")
-weather_t <- as.POSIXct(weather$Time, format = "%H:%M:%S")
+firedf$Time <- as.POSIXct(firedf$Time, format = "%H:%M:%S")
+weather$Time <- as.POSIXct(weather$Time, format = "%H:%M:%S")
 
+firedf$Date
 
+fulldata<-firedf
+for(i in 1:ncol(weather)){
+  fulldata[,i+ncol(firedf)]<-NA
+  names(fulldata)[i+ncol(firedf)]<-names(weather)[i]
+}
 
-for (i in firedf$Time){
+fulldata<-as.data.frame(fulldata)
+head(fulldata)
+weather<-as.data.frame(weather)
+
+for (i in (1:nrow(firedf))){
   #selects rows where dates line up
-  potiental_row<- which(weather$Date == firedf$Date[i])
-  work <- weather_t[potiental_row]
+  potiental_row_index <- which(weather$Date == firedf$Date[i])
+  potiential_time <- weather$Time[potiental_row_index]
+  abs_diff_times <- abs(difftime(firedf$Time[i],potiential_time))
+  closest_time_row_index_abs <- which.min(abs_diff_times)
   
-  for (l in work){
-    elapsed <- difftime(fire_t[i], work[l], unit = 'min')
-  
-    }
-  selected_row <- which(potiential_row == min(elapsed))
+  a <- potiental_row_index[closest_time_row_index_abs]
+  ifelse(length(potiental_row_index)==0,NA,fulldata[i,8:ncol(fulldata)]<-weather[a,])
 }
 
 
-
-working <- which(weather$Date == firedf$Date[1])
-working
-abba<- weather_t[working]
-abba
-
-a <- difftime(fire_t[1],weather_t[1], units = 'min')
-b <- difftime(fire_t[1],weather_t[2], units = 'min')
-
-q <- c(a,b)
-a
-b
-min(q)
+##########################################################################
 
 
